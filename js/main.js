@@ -55,6 +55,7 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+const LikeArray = []; 
 
 const Container=document.getElementById("container");
 
@@ -82,18 +83,36 @@ posts.forEach(element => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
+                        Piace a <b id="${element.likes}" class="js-likes-counter">${element.likes}</b> persone
                     </div>
                 </div> 
             </div>            
         </div>
     `;
-   
+const ButtonLink=document.querySelectorAll("a");
+const Like =document.getElementById(element.likes);
+
+console.log(Like);
+
+
+
+ButtonLink.forEach(button => {
+    button.addEventListener("click",function () {
+         button.classList.add("like-button--liked");
+       
+         
+    })
+}); 
 
 });
+
+console.log(LikeArray);
+
+
+   

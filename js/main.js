@@ -60,16 +60,14 @@ const LikeArray = [];
 
 const Container=document.getElementById("container");
 
-
-posts.forEach(element => {
-
+posts.forEach((element, index) => {
     Container.innerHTML += `
     <!-- post di esempio/template, da togliere/commentare e generare da JS -->
         <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src=${element.author.image} alt="Phil Mangione">                    
+                        <img class="profile-pic" src=${element.author.image} alt=${element.author.name}>                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${element.author.name}</div>
@@ -96,23 +94,40 @@ posts.forEach(element => {
             </div>            
         </div>
     `;
-const ButtonLink=document.querySelectorAll("a");
-const Like =document.querySelectorAll("b");
 
-console.log(Like);
+// let Data= element.created;
+
+
+// Data=Data.split (" ");
+
+
+
+});
+
+const ButtonLink = document.querySelectorAll("a");
+
+
+
+
 console.log(ButtonLink);
 
+let ArrayLike=[];
 
 ButtonLink.forEach(button => {
     button.addEventListener("click",function () {
          button.classList.add("like-button--liked");
-        element.likes++; 
-        console.log(element.likes);
-    })
+         let Id=button.dataset;
+         Id=Id.postid -1;
+       ArrayLike.push(Id+1); 
+       console.log(Id);
+         let Increment = posts[Id].likes + 1;
+        console.log(Increment);
+      let BoxLike= document.getElementById(Id+1);
+      console.log(BoxLike);
+      BoxLike.innerHTML=Increment;
+         
+         console.log(ArrayLike);
+        })
 }); 
 
-});
-
-
-
-   
+   console.log(posts[0]);

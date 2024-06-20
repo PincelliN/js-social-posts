@@ -55,6 +55,7 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
 const LikeArray = []; 
 
 const Container=document.getElementById("container");
@@ -89,30 +90,29 @@ posts.forEach(element => {
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="${element.likes}" class="js-likes-counter">${element.likes}</b> persone
+                        Piace a <b id="${element.id}" class="js-likes-counter">${element.likes}</b> persone
                     </div>
                 </div> 
             </div>            
         </div>
     `;
 const ButtonLink=document.querySelectorAll("a");
-const Like =document.getElementById(element.likes);
+const Like =document.querySelectorAll("b");
 
 console.log(Like);
-
+console.log(ButtonLink);
 
 
 ButtonLink.forEach(button => {
     button.addEventListener("click",function () {
          button.classList.add("like-button--liked");
-       
-         
+        element.likes++; 
+        console.log(element.likes);
     })
 }); 
 
 });
 
-console.log(LikeArray);
 
 
    

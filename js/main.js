@@ -56,12 +56,25 @@ const posts = [
     }
 ];
 
-const LikeArray = []; 
 
+// variabile contenitore generale
 const Container=document.getElementById("container");
 
-posts.forEach((element, index) => {
-    Container.innerHTML += `
+
+// per ogni elemento di post creo un elemento
+posts.forEach((element) => {
+ 
+ 
+    // variabile data
+  let Data = element.created;
+
+  // variabile Data Italian
+  let NewData = Data.split("-").reverse().join("-");
+
+  //Modifica Data
+  element.created = NewData;
+
+  Container.innerHTML += `
     <!-- post di esempio/template, da togliere/commentare e generare da JS -->
         <div class="post">
             <div class="post__header">
@@ -94,40 +107,51 @@ posts.forEach((element, index) => {
             </div>            
         </div>
     `;
-
-// let Data= element.created;
-
-
-// Data=Data.split (" ");
-
-
-
 });
 
+// Array di tutti gli ancored
 const ButtonLink = document.querySelectorAll("a");
 
 
 
 
-console.log(ButtonLink);
 
+//array vuoto dove andrò ad inserire i postid
 let ArrayLike=[];
 
+//per ogni Ancorade creo un evenlist
 ButtonLink.forEach(button => {
     button.addEventListener("click",function () {
+
+        //al click aggiungo una classe
          button.classList.add("like-button--liked");
+
+         //recupero l'id del post attraverso il dataset
          let Id=button.dataset;
-         Id=Id.postid -1;
-       ArrayLike.push(Id+1); 
+
+        //al click aggiungo il postid del bottone cliccato al ArrayLike
+         ArrayLike.push(Id); 
+
+         let PureID =Id.postid;
+         //per determinare la posizione del oggetto nel array tolgo uno ad ogni id
+        let Arrayposition = PureID -1;
+        
        console.log(Id);
-         let Increment = posts[Id].likes + 1;
+
+
+       // variabile in gui attraverso Id risalgo alla posizione dell array e rucupero la propieta likes e l'incremento di 1
+         let Increment = posts[Arrayposition].likes + 1;
+
         console.log(Increment);
-      let BoxLike= document.getElementById(Id+1);
+    //variabile che ad ogni click prende  l'elemento con PureId
+      let BoxLike= document.getElementById(PureID);
+
       console.log(BoxLike);
+        //stampo nella Variabile box attraverso innerHtml il risultato incrementato
       BoxLike.innerHTML=Increment;
          
          console.log(ArrayLike);
         })
 }); 
 
-   console.log(posts[0]);
+  

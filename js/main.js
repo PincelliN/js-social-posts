@@ -61,11 +61,32 @@ const posts = [
 const Container=document.getElementById("container");
 
 
+//Condizione
+for (let index = 0; index < posts.length; index++) {
+    const element = posts[index];
+
+    const ProfileImg = document.getElementsByClassName("profile-pic");
+
+    if (element.author.image === null) {
+    const Name = element.author.name;
+
+    const FirstLetter = Name.split(" ");
+
+    console.log(FirstLetter);
+
+    const Letter = FirstLetter[0][0] + FirstLetter[1][0];
+
+    console.log(Letter);
+
+        
+    
+       element.author.image = Letter; 
+    }
+}
+  
 // per ogni elemento di post creo un elemento
 posts.forEach((element) => {
- 
- 
-    // variabile data
+  // variabile data
   let Data = element.created;
 
   // variabile Data Italian
@@ -80,7 +101,7 @@ posts.forEach((element) => {
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src=${element.author.image} alt=${element.author.name}>                    
+                        <img class="profile-pic" src=${element.author.image} alt=${element.author.image}>                    
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${element.author.name}</div>
@@ -107,24 +128,48 @@ posts.forEach((element) => {
             </div>            
         </div>
     `;
+
+  //Condizione
+  for (let index = 0; index < posts.length; index++) {
+    const element = posts[index];
+
+    const ProfileImg = document.getElementsByClassName("profile-pic");
+
+    if (element.author.image === null) {
+      const Name = element.author.name;
+
+      const FirstLetter = Name.split(" ");
+
+      console.log(FirstLetter);
+
+      const Letter = FirstLetter[0][0] + FirstLetter[1][0];
+
+      console.log(Letter);
+
+        
+       
+      element.author.image = Letter; 
+    }
+  }
 });
+    
 
 // Array di tutti gli ancored
 const ButtonLink = document.querySelectorAll("a");
-
-
-
-
 
 //array vuoto dove andrò ad inserire i postid
 let ArrayLike=[];
 
 //per ogni Ancorade creo un evenlist
 ButtonLink.forEach(button => {
-    button.addEventListener("click",function () {
-
+    button.addEventListener("click",function (event) {
+        event.preventDefault();
         //al click aggiungo una classe
-         button.classList.add("like-button--liked");
+       
+
+         if (!button.classList.contains("like-button--liked")) {
+
+            button.classList.add("like-button--liked");
 
          //recupero l'id del post attraverso il dataset
          let Id=button.dataset;
@@ -150,8 +195,45 @@ ButtonLink.forEach(button => {
         //stampo nella Variabile box attraverso innerHtml il risultato incrementato
       BoxLike.innerHTML=Increment;
          
+         } else{
+           //al click rimuovo una classe
+           button.classList.remove("like-button--liked");
+
+           //recupero l'id del post attraverso il dataset
+           let Id = button.dataset;
+
+           //al click rimuovo il postid del bottone cliccato al ArrayLike
+           ArrayLike.pop(Id);
+
+           let PureID = Id.postid;
+           //per determinare la posizione del oggetto nel array tolgo uno ad ogni id
+           let Arrayposition = PureID - 1;
+
+           console.log(Id);
+
+           // variabile in cui attraverso l' Id risalgo alla posizione dell array e rucupero la propieta likes
+           let Decrement = posts[Arrayposition].likes ;
+
+           console.log(Decrement);
+           //variabile che ad ogni click prende  l'elemento con PureId
+           let BoxLike = document.getElementById(PureID);
+
+           console.log(BoxLike);
+           //stampo nella Variabile box attraverso innerHtml il risultato originale
+           BoxLike.innerHTML = Decrement;
+         }  ;
+       
+         
          console.log(ArrayLike);
+         console.log(button.classList);
         })
 }); 
 
+ 
   
+
+
+
+
+
+

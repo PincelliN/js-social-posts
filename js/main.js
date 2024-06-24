@@ -61,28 +61,7 @@ const posts = [
 const Container=document.getElementById("container");
 
 
-//Condizione
-for (let index = 0; index < posts.length; index++) {
-    const element = posts[index];
 
-    const ProfileImg = document.getElementsByClassName("profile-pic");
-
-    if (element.author.image === null) {
-    const Name = element.author.name;
-
-    const FirstLetter = Name.split(" ");
-
-    console.log(FirstLetter);
-
-    const Letter = FirstLetter[0][0] + FirstLetter[1][0];
-
-    console.log(Letter);
-
-        
-    
-       element.author.image = Letter; 
-    }
-}
   
 // per ogni elemento di post creo un elemento
 posts.forEach((element) => {
@@ -95,7 +74,8 @@ posts.forEach((element) => {
   //Modifica Data
   element.created = NewData;
 
-  Container.innerHTML += `
+  if (element.author.image !== null) {
+    Container.innerHTML += `
     <!-- post di esempio/template, da togliere/commentare e generare da JS -->
         <div class="post">
             <div class="post__header">
@@ -128,30 +108,63 @@ posts.forEach((element) => {
             </div>            
         </div>
     `;
+  } else if (element.author.image === null) {
+    Container.innerHTML += `
+    <!-- post di esempio/template, da togliere/commentare e generare da JS -->
+        <div class="post">
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <div class="profile-pic">${element.author.image}</div>                  
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${element.author.name}</div>
+                        <div class="post-meta__time">${element.created}</div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="post__text">${element.content}</div>
+            <div class="post__image">
+                <img src=${element.media} alt=${element.author.name}>
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="${element.id}" class="js-likes-counter">${element.likes}</b> persone
+                    </div>
+                </div> 
+            </div>            
+        </div>
+    `;
+  }
 
   //Condizione
-  for (let index = 0; index < posts.length; index++) {
-    const element = posts[index];
-
-    const ProfileImg = document.getElementsByClassName("profile-pic");
 
     if (element.author.image === null) {
       const Name = element.author.name;
 
       const FirstLetter = Name.split(" ");
 
-      console.log(FirstLetter);
+      
 
       const Letter = FirstLetter[0][0] + FirstLetter[1][0];
 
-      console.log(Letter);
+     
 
-        
-       
-      element.author.image = Letter; 
+      const BoxLetter = document.querySelector("div.profile-pic")
+
+     
+
+      BoxLetter.innerHTML = Letter;
     }
   }
-});
+);  
     
 
 // Array di tutti gli ancored
